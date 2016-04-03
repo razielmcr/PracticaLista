@@ -22,6 +22,55 @@ public class ListaDoblementeLigada<T> extends ColeccionAbstracta<T> implements L
 			siguiente = s;
 		}
 	}
+	private static class Iterator implements ListIterator<T>{
+	        private NodoDL<T> anterior;
+	        private NodoDL<T> siguiente, 
+	        private NodoDL<T> ultimoDevuelto;
+	        
+	       @Override public boolean hasNext() {
+            return siguiente != null;
+        }
+
+        /* Nos da el elemento siguiente. */
+        public T next() {
+            if(siguiente == null)
+                throw new NoSuchElementException();
+            anterior = siguiente;
+            siguiente = siguiente.siguiente;
+            return anterior.elemento; 
+        }
+
+        /* Nos dice si hay un elemento anterior. */
+        public boolean hasPrevious() {
+            return anterior != null;
+        }
+
+        /* Nos da el elemento anterior. */
+        public T previous() {
+            if(anterior == null)
+                throw new NoSuchElementException();
+            siguiente = anterior;
+            anterior = anterior.anterior;
+            return siguiente.elemento;
+        }
+
+        /* Mueve el iterador al inicio de la lista. */
+        public void start() {
+            anterior = null;
+            siguiente = cabeza;
+        }
+
+        /* Mueve el iterador al final de la lista. */
+        public void end() {
+            anterior = rabo;
+            siguiente = null;
+        }
+
+        /* No implementamos este método. */
+        ublic void remove() {
+            throw new UnsupportedOperationException();
+        }
+    }
 	
 	private NodoDL<T> head;
 	private NodoDL<T> tail;
@@ -130,17 +179,7 @@ public class ListaDoblementeLigada<T> extends ColeccionAbstracta<T> implements L
 	}
 
 	public int indexOf(Object o){
-		if(o == null) throw new IllegalArgumentException();
-		NodoDL<T> tmp = head;
-		return indexOfR(tmp, 0, (T) o);
-	}
-
-	private int indexOfR(NodoDL<T> n, int i, T element) {
-		if(n == null)
-			return -1;
-		if(element == n.dato)
-			return i;
-		return indexOfR(n.siguiente, i + 1, element);
+		return 0;
 	}
 
 	public T remove(int index){
