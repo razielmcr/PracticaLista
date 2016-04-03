@@ -130,7 +130,17 @@ public class ListaDoblementeLigada<T> extends ColeccionAbstracta<T> implements L
 	}
 
 	public int indexOf(Object o){
-		return 0;
+		if(o == null) throw new IllegalArgumentException();
+		NodoDL<T> tmp = head;
+		return indexOfR(tmp, 0, (T) o);
+	}
+
+	private int indexOfR(NodoDL<T> n, int i, T element) {
+		if(n == null)
+			return -1;
+		if(element == n.dato)
+			return i;
+		return indexOfR(n.siguiente, i + 1, element);
 	}
 
 	public T remove(int index){
